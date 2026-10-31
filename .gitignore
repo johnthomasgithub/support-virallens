@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# Environment files (secrets) — only the .env.example templates are committed
+.env
+.env.*
+!.env.example
+
+# Build output
+dist/
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+
+# Local dev MongoDB data (npm run db:dev)
+.mongo-data/
+
+# E2E test screenshots (generated)
+client/tests/screenshots/

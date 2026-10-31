@@ -1,0 +1,38 @@
+# Render Blueprint — deploys the Express API from server/Dockerfile.
+# Render dashboard → New → Blueprint → select this repo.
+# Values marked `sync: false` are secrets: Render asks for them during setup.
+services:
+  - type: web
+    name: lumi-api # public URL becomes https://lumi-api.onrender.com (if the name is free)
+    runtime: docker
+    plan: free
+    region: singapore # pick the region closest to your MongoDB Atlas cluster
+    dockerContext: ./server
+    dockerfilePath: ./server/Dockerfile
+    healthCheckPath: /health
+    autoDeploy: true
+    buildFilter:
+      paths:
+        - server/**
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Requests arrive via Vercel's /api rewrite and then Render's load balancer
+      # (2 proxies), so the real client IP is 2 hops back — used by rate limiting.
+      - key: TRUST_PROXY
+        value: '2'
+      # The browser only ever talks to the Vercel domain, so the cookie is first-party
+      - key: COOKIE_SAMESITE
+        value: lax
+      - key: JWT_SECRET
+        generateValue: true
+      - key: MONGODB_URI
+        sync: false
+      - key: CLIENT_URL
+        sync: false # e.g. https://lumi-support.vercel.app
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: OPENROUTER_MODEL
+        value: openrouter/free
+      - key: OPENROUTER_FALLBACK_MODEL
+        value: nvidia/nemotron-3.5-lightning:free

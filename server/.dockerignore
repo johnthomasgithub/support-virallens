@@ -1,0 +1,12 @@
+node_modules
+npm-debug.log
+.env*
+!.env.example
+.git
+.gitignore
+tests
+.DS_Store
+
+.mongo-data
+scripts
+coverage
