@@ -3,7 +3,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://lumi-api.onrender.com/:path*"
+      "destination": "https://lumi-api-qmjb.onrender.com/:path*"
     },
     {
       "source": "/(.*)",
